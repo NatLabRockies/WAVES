@@ -50,7 +50,7 @@ array_system_design:
   floating_cable_depth: 200
   cables:
   - XLPE_630mm_66kV_dynamic
-  location_data: base_floating_2024_layout
+  location_data: base_osw_floating
 export_system_design:
   cables: XLPE_1200mm_220kV_dynamic # change to the 1200mm cable once pulling from right repo
   percent_added_length: 0.0

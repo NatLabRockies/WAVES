@@ -13,8 +13,8 @@ orbit_weather_cols:
 - windspeed_100m
 - windspeed_10m
 - waveheight
-floris_wind_direction: wind_direction_137m
-floris_windspeed: windspeed_137m
+floris_wind_direction: wd_137m_NOW23
+floris_windspeed: ws_137m_NOW23
 floris_x_col: floris_x
 floris_y_col: floris_y
 
@@ -25,7 +25,7 @@ conenct_orbit_array_design: true
 
 # High-level project financials
 discount_rate: 0.025
-fixed_charge_rate: 0.0634 # real FCR from COWER: 2025 Edition draft as of 10/13/2025
+fixed_charge_rate: 0.0683903437838572 # real FCR from COWER: 2025 Edition
 loss_ratio: 0.1
 offtake_price: 83.30
 

@@ -45,7 +45,7 @@ OffshoreSubstationInstallation:
 array_system_design:
   cables:
   - XLPE_630mm_66kV
-  location_data: base_fixed_bottom_2024_layout
+  location_data: base_osw_fixed
 export_system_design:
   cables: XLPE_1200mm_220kV
   percent_added_length: 0.0
