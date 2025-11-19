@@ -25,7 +25,7 @@ conenct_orbit_array_design: true
 
 # High-level project financials
 discount_rate: 0.025
-fixed_charge_rate: 0.0683903437838572 # real FCR from COWER: 2025 Edition
+fixed_charge_rate: 0.0638240882080915 # real FCR from COWER: 2025 Edition
 loss_ratio: 0.1
 offtake_price: 83.30
 

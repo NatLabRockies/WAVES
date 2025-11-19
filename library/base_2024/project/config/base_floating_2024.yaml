@@ -24,7 +24,7 @@ connect_floris_to_layout: true
 conenct_orbit_array_design: true
 
 # High-level project financials
-fixed_charge_rate: 0.0751628144944212 # real FCR from COWER: 2025 Edition
+fixed_charge_rate: 0.0706131302258559 # real FCR from COWER: 2025 Edition
 discount_rate: 0.025
 loss_ratio: 0.1
 offtake_price: 83.30
