@@ -2945,12 +2945,12 @@ class Project(FromDictMixin):
                 self.capacity("mw"),
                 self.orbit.num_turbines,
                 self.orbit.turbine_rating,
-                self.orbit.config["turbine"]["rotor_diameter"],
-                self.orbit.config["turbine"]["hub_height"],
+                self.floris.core.farm.turbine_definitions[0]["rotor_diameter"],
+                self.floris.core.farm.turbine_definitions[0]["hub_height"],
                 self.orbit.config["turbine"]["turbine_rating"]
                 * 1000000
                 / (
-                    math.pi * (self.orbit.config["turbine"]["rotor_diameter"] / 2) ** 2
+                    math.pi * (self.floris.core.farm.turbine_definitions[0]["rotor_diameter"] / 2) ** 2
                 ),  # Specific power
                 self.orbit.config["site"]["depth"],
                 self.determine_substructure_type(),
@@ -3267,3 +3267,133 @@ class Project(FromDictMixin):
         # Extract windspeed data
         wind_speed_data = self.calculate_wind_speed(height)
         return fit_weibull_distribution(wind_speed_data, random_seed)
+
+    def generate_cost_report(self) -> pd.DataFrame:
+        """
+        Generates a long-form cost & performance report with the following metrics:
+            - CapEx per kW ($/kW)
+            - Annual OpEx per kW ($/kW-year)
+            - FCR (%)
+            - Total system losses (%)
+            - Availability (%)
+            - Gross AEP (MWh/kW/yr)
+            - Net AEP (MWh/kW/yr)
+            - Gross Capacity Factor (%)
+            - Net Capacity Factor (%)
+
+        Returns
+        -------
+        pd.DataFrame
+            Columns: ["Assumption", "Units", "Value"]
+        """
+
+        rows = []
+
+        # ------------------------------------------------------------
+        # CapEx per kW ($/kW)
+        # ------------------------------------------------------------
+        capex_per_kw = self.capex(per_capacity="kw")
+        rows.append({
+            "Assumption": "CapEx per kW",
+            "Units": "$/kW",
+            "Value": capex_per_kw,
+        })
+
+        # ------------------------------------------------------------
+        # Annual OpEx per kW ($/kW/year)
+        # ------------------------------------------------------------
+        opex_per_kw = self.opex(per_capacity="kw") / self.operations_years
+        rows.append({
+            "Assumption": "Annual OpEx per kW",
+            "Units": "$/kW-yr",
+            "Value": opex_per_kw,
+        })
+
+        # ------------------------------------------------------------
+        # FCR (%)
+        # ------------------------------------------------------------
+        rows.append({
+            "Assumption": "FCR",
+            "Units": "%",
+            "Value": 100 * self.fixed_charge_rate,
+        })
+
+        # ------------------------------------------------------------
+        # Total system losses (%)
+        # ------------------------------------------------------------
+        rows.append({
+            "Assumption": "Total system losses",
+            "Units": "%",
+            "Value": 100 * self.loss_ratio(),
+        })
+
+        # ------------------------------------------------------------
+        # Availability (%)
+        # ------------------------------------------------------------
+        availability = 100 * self.availability(
+            which="energy", frequency="project", by="windfarm"
+        )
+        rows.append({
+            "Assumption": "Availability",
+            "Units": "%",
+            "Value": availability,
+        })
+
+        # ------------------------------------------------------------
+        # Gross AEP (MWh/kW/yr)
+        # ------------------------------------------------------------
+        gross_aep = self.energy_potential(units="mw", per_capacity="kw", aep=True)
+        rows.append({
+            "Assumption": "Gross AEP",
+            "Units": "MWh/kW/yr",
+            "Value": gross_aep,
+        })
+
+        # ------------------------------------------------------------
+        # Net AEP (MWh/kW/yr)
+        # ------------------------------------------------------------
+        net_aep = self.energy_production(units="mw", per_capacity="kw", aep=True)
+        rows.append({
+            "Assumption": "Net AEP",
+            "Units": "MWh/kW/yr",
+            "Value": net_aep,
+        })
+
+        # ------------------------------------------------------------
+        # Gross Capacity Factor (%)
+        # ------------------------------------------------------------
+        gross_cf = 100 * self.capacity_factor(
+            which="gross", frequency="project", by="windfarm"
+        )
+        rows.append({
+            "Assumption": "Gross Capacity Factor",
+            "Units": "%",
+            "Value": gross_cf,
+        })
+
+        # ------------------------------------------------------------
+        # Net Capacity Factor (%)
+        # ------------------------------------------------------------
+        net_cf = 100 * self.capacity_factor(
+            which="net", frequency="project", by="windfarm"
+        )
+        rows.append({
+            "Assumption": "Net Capacity Factor",
+            "Units": "%",
+            "Value": net_cf,
+        })
+
+        # ------------------------------------------------------------
+        # LCOE ($/MWh)
+        # ------------------------------------------------------------
+        lcoe = self.lcoe()
+        rows.append({
+            "Assumption": "LCOE",
+            "Units": "$/MWh",
+            "Value": lcoe,
+        })
+
+        # Convert to DataFrame
+        df = pd.DataFrame(rows, columns=["Assumption", "Units", "Value"])
+        return df
+    
