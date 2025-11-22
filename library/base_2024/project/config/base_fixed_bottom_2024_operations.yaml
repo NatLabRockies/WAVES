@@ -6,7 +6,7 @@ service_equipment:
   - hlv.yaml
 layout: base_osw_fixed.csv
 inflation_rate: 0
-fixed_costs: fixed_costs_osw_fixed.yaml
+fixed_costs: fixed_costs_fixed_bottom_2024.yaml
 workday_start: 7
 workday_end: 19
 start_year: 2000
