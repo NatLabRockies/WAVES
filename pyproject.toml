@@ -72,7 +72,7 @@ dev = [
     "ruff",
 ]
 docs = [
-    "jupyter-book",
+    "jupyter-book<2",
     "myst-nb",
     "myst-parser",
     "sphinx-autodoc-typehints",
