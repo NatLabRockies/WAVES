@@ -153,7 +153,7 @@ run:
       cut_in_wind_speed: 3.0
       cut_out_wind_speed: 25.0  # standard ws range
 report_config:
-  name: Base Floating 2022
+  name: Base Floating
   "# Turbines":
     metric: n_turbines
   Turbine Rating (MW):

@@ -1,4 +1,4 @@
-name: lbw_test
+name: LBW Test
 weather: merra2_32.5N_-100.625W_1980_2024.pqt
 service_equipment:
   - [truck.yaml, 3]
