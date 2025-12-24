@@ -6,7 +6,7 @@
 ```
 
 This section will provide a guided overview of all the components of the `Project` class that are
-relevant to users, and demonstrate inputs used for the 2022 Cost of Wind Energy Review (COWER)
+relevant to users, and demonstrate inputs used for the Cost of Wind Energy Review (COWER)
 analysis. For a complete API reference, please refer to the [API documentation](./api.md).
 
 ## Configuring
@@ -55,14 +55,14 @@ analysis. For a complete API reference, please refer to the [API documentation](
    :noindex:
 ```
 
-### COWER 2022 Configuration
+### COWER Configuration
 
 Aligning with COWER, we have the following inputs. It should be noted that each model's
 configuration is a pointer to another file to keep each configuration as tidy as possible. However,
 each of `orbit_config`, `wombat_config`, and `floris_config` allow for a direct dictionary
 configuration input.
 
-```{literalinclude} ../library/base_2022/project/config/base_fixed_bottom_2022.yaml
+```{literalinclude} ../library/base/project/config/base_osw_fixed.yaml
 :language: yaml
 :lines: 1-36
 :linenos:
@@ -70,7 +70,7 @@ configuration input.
 
 ...
 
-```{literalinclude} ../library/base_2022/project/config/base_fixed_bottom_2022.yaml
+```{literalinclude} ../library/base/project/config/base_osw_fixed.yaml
 :language: yaml
 :linenos:
 :lineno-start: 43
@@ -79,7 +79,7 @@ configuration input.
 
 ...
 
-```{literalinclude} ../library/base_2022/project/config/base_fixed_bottom_2022.yaml
+```{literalinclude} ../library/base/project/config/base_osw_fixed.yaml
 :language: yaml
 :linenos:
 :lineno-start: 46
@@ -88,7 +88,7 @@ configuration input.
 
 ...
 
-```{literalinclude} ../library/base_2022/project/config/base_fixed_bottom_2022.yaml
+```{literalinclude} ../library/base/project/config/base_osw_fixed.yaml
 :language: yaml
 :linenos:
 :lineno-start: 95
@@ -97,7 +97,7 @@ configuration input.
 
 ...
 
-```{literalinclude} ../library/base_2022/project/config/base_fixed_bottom_2022.yaml
+```{literalinclude} ../library/base/project/config/base_osw_fixed.yaml
 :language: yaml
 :linenos:
 :lineno-start: 141
@@ -140,8 +140,8 @@ from pathlib import Path
 from waves import Project
 from waves.utilities import load_yaml
 
-library_path = Path("../library/base_2022/")
-config = load_yaml(library_path / "project/config", "base_fixed_bottom_2022.yaml")
+library_path = Path("../library/base/")
+config = load_yaml(library_path / "project/config", "base_osw_fixed.yaml")
 config["library_path"] = library_path  # add the library path
 
 # Ensure FLORIS is not automatically connected
@@ -234,7 +234,7 @@ Visually, the following is a general flow of operations for combining each model
 
 To quickly produce any of the high-level outputs to a single `DataFrame`, the below method can be
 used in place of individually calculating each metric and combining into a report. Additionally,
-users can refer to the [COWER 2022 example](example_cower_2022:results) for the reported results,
+users can refer to the [COWER example](example_cower:results) for the reported results,
 which relies on the `generate_report` method and accessing the ORBIT `ProjectManager` directly for
 further CapEx breakdowns.
 
@@ -400,7 +400,7 @@ defined in the configuration file. The [provided example](./waves_example.md) is
 be run through the CLI. Below is an example of the additional configurations
 
 ```{eval-rst}
-.. literalinclude:: ../library/base_2022/project/config/base_fixed_bottom_2022.yaml
+.. literalinclude:: ../library/base/project/config/base_osw_fixed.yaml
    :language: yaml
    :linenos:
    :lineno-start: 146
