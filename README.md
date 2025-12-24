@@ -24,7 +24,7 @@ reference guide, and examples.
 
 ## Requirements
 
-Python 3.10+, preferably 3.12
+Python 3.10+
 
 ## Environment Setup
 
@@ -32,11 +32,12 @@ Download the latest version of [Miniconda](https://docs.conda.io/en/latest/minic
 for the appropriate OS. Follow the remaining [steps](https://conda.io/projects/conda/en/latest/user-guide/install/index.html#regular-installation)
 for the appropriate OS version.
 
-Using conda, create a new virtual environment:
+Using conda, create a new virtual environment and replace "waves" with a different environment
+name, if preferred:
 
 ```console
-conda create -n <environment_name> python=3.12
-conda activate <environment_name>
+conda create -n waves python=3.14
+conda activate waves
 conda install -c anaconda pip
 conda config --set pip_interop_enabled true
 
