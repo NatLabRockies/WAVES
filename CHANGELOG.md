@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Unreleased
+
+- Supports WOMBAT v0.13+ to ensure the latest bug fixes and data updates are available to all users.
+- Updates the COWER example for the 2025 reporting cycle.
+- Removes `library/base_2022` in favor of a `libray/base` for base assumptions and scenarios that
+  can be updated annually as needed.
+
 ## v0.6.1 - 17 October 2025
 
 - Replaces the use of WOMBAT's weather profile for the internal `Project.weather` for
