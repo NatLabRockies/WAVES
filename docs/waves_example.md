@@ -12,7 +12,7 @@ kernelspec:
 (example_cower)=
 # Cost of Wind Energy Review 2024
 
-[![Run in Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NREL/WAVES/main?filepath=examples)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NREL/WAVES/main?filepath=examples)
 
 Be sure to install `pip install "waves[examples]"` (or `pip install ".[examples]"`) to work with
 this example.
@@ -142,9 +142,8 @@ in the O&M phase: `full_wind_rose=False`.
 ```{code-cell} ipython3
 start = perf_counter()
 project_fixed.run(
-    which_floris="wind_rose",  # month-based wind rose wake analysis
     full_wind_rose=False,  # use the WOMBAT date range
-    floris_reinitialize_kwargs={"cut_in_wind_speed": 3.0, "cut_out_wind_speed": 25.0}  # standard ws range
+    floris_kwargs={"cut_in_wind_speed": 3.0, "cut_out_wind_speed": 25.0}  # standard ws range
 )
 project_fixed.wombat.env.cleanup_log_files()  # Delete logging data from the WOMBAT simulations
 end = perf_counter()
@@ -152,9 +151,8 @@ print(f"Fixed run time: {end - start:,.2f} seconds")
 
 start = perf_counter()
 project_floating.run(
-    which_floris="wind_rose",
     full_wind_rose=False,
-    floris_reinitialize_kwargs=dict(cut_in_wind_speed=3.0, cut_out_wind_speed=25.0)
+    floris_kwargs=dict(cut_in_wind_speed=3.0, cut_out_wind_speed=25.0)
 )
 project_floating.wombat.env.cleanup_log_files()  # Delete logging data from the WOMBAT simulations
 end = perf_counter()
@@ -215,11 +213,11 @@ metrics_configuration = {
     "OpEx per kW ($/kW)": {"metric": "opex", "kwargs": {"per_capacity": "kw"}},
     "AEP (MWh)": {
         "metric": "energy_production",
-        "kwargs": {"units": "mw", "aep": True, "with_losses": True}
+        "kwargs": {"units": "mw", "aep": True}
     },
     "AEP per kW (MWh/kW)": {
         "metric": "energy_production",
-        "kwargs": {"units": "mw", "per_capacity": "kw", "aep": True, "with_losses": True}
+        "kwargs": {"units": "mw", "per_capacity": "kw", "aep": True}
     },
     "Net Capacity Factor With Wake Losses (%)": {
         "metric": "capacity_factor",
@@ -227,7 +225,7 @@ metrics_configuration = {
     },
     "Net Capacity Factor With All Losses (%)": {
         "metric": "capacity_factor",
-        "kwargs": {"which": "net", "with_losses": True}
+        "kwargs": {"which": "net"}
     },
     "Gross Capacity Factor (%)": {
         "metric": "capacity_factor",
