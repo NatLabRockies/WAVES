@@ -78,14 +78,12 @@ def convert_to_multi_index(
 
 
 def load_weather(value: str | Path | pd.DataFrame) -> pd.DataFrame:
-    """Loads in the weather file using PyArrow, but returing a ``pandas.DataFrame``
-    object. Must have the column "datetime", which can be converted to a
-    ``pandas.DatetimeIndex``.
+    """Loads in the weather file using the WOMBAT loading functionality, and removes
+    the extra columns that only WOMBAT will use and initialize internally.
 
     Args:
         value : str | Path | pd.DataFrame
-            The input file name and path, or a ``pandas.DataFrame`` (gets passed back
-            without modification).
+            The input file name and path, or a ``pandas.DataFrame``.
 
     Returns
     -------
@@ -98,7 +96,6 @@ def load_weather(value: str | Path | pd.DataFrame) -> pd.DataFrame:
         weather = library.load_weather(value)
 
     weather = weather.to_pandas().drop(columns=["index", "hour"]).set_index("datetime")
-
     return weather
 
 
