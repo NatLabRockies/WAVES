@@ -5,7 +5,7 @@ service_equipment:
   - cab.yaml
   - hlv.yaml
   - dsv.yaml
-layout: base_osw_fixed.csv
+layout: base_osw_fixed_layout.csv
 inflation_rate: 0
 fixed_costs: fixed_costs_osw_fixed.yaml
 workday_start: 7
