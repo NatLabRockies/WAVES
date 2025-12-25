@@ -95,7 +95,6 @@ def load_weather(value: str | Path | pd.DataFrame) -> pd.DataFrame:
     if isinstance(value, pd.DataFrame):
         weather = library.format_weather(value)
     else:
-        print(dir(library))
         weather = library.load_weather(value)
 
     weather = weather.to_pandas().drop(columns=["index", "hour"]).set_index("datetime")
