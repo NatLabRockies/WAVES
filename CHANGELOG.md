@@ -7,6 +7,8 @@
 - Updates the COWER example for the 2025 reporting cycle.
 - Removes `library/base_2022` in favor of a `libray/base` for base assumptions and scenarios that
   can be updated annually as needed.
+- A pre-commit workflow is added to be run against PRs into the main and develop branches to ensure
+  code quality checks are passed.
 
 ## v0.6.1 - 17 October 2025
 
