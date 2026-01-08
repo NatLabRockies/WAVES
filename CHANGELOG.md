@@ -2,7 +2,8 @@
 
 ## Unreleased
 
-- Supports WOMBAT v0.13+ to ensure the latest bug fixes and data updates are available to all users.
+- Supports WOMBAT v0.13.1+ to ensure the latest bug fixes and data updates are available to all users.
+- Supports ORBIT v.1.2.6+ to ensure the latest bug fixes, features, data updates are available to all users.
 - Updates the COWER example for the 2025 reporting cycle.
 - Removes `library/base_2022` in favor of a `libray/base` for base assumptions and scenarios that
   can be updated annually as needed.
