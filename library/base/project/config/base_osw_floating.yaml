@@ -2,9 +2,9 @@
 turbine_type: floating
 
 # Primary model configurations
-orbit_config: base_floating_install.yaml
+orbit_config: base_osw_floating_install.yaml
 wombat_config: base_osw_floating_operations.yaml
-floris_config: base_floating_floris_jensen.yaml
+floris_config: base_osw_floating_floris_jensen.yaml
 weather_profile: era5_41.0N_125.0W_1989_2019.pqt
 
 # Shared input connections

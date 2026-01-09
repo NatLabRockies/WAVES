@@ -2,9 +2,9 @@
 turbine_type: fixed
 
 # Primary model configurations
-orbit_config: base_fixed_bottom_install.yaml
+orbit_config: base_osw_fixed_bottom_install.yaml
 wombat_config: base_osw_fixed_operations.yaml
-floris_config: base_fixed_bottom_floris_jensen.yaml
+floris_config: base_osw_fixed_bottom_floris_jensen.yaml
 weather_profile: era5_40.0N_72.5W_1990_2020.pqt
 
 # Shared input connections

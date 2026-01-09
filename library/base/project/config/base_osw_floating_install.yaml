@@ -1,75 +1,74 @@
-# Fixed bottom base case
+# floating base case
 site:
-  depth: 34  # COE Review 2021
-  distance: 116  # COE Review 2021
-  distance_to_landfall: 50  # COE Review 2021
-  mean_windspeed: 9.17  # avg from weather profile in the Vineyard Wind 1 site
+  depth: 739  # COE Review 2021
+  distance: 189  # COE Review 2021
+  distance_to_landfall: 36  # COE Review 2021
+  mean_windspeed: 8.41  # avg from weather profile in the Humboldt site
 plant:
   layout: custom
   num_turbines: 50
   row_spacing: 7
   turbine_spacing: 7
 turbine: 12MW_generic
+oss_design:
+  num_substations: 1
 port:
-  sub_assembly_lines: 1  # COE Review 2021
-  turbine_assembly_cranes: 1  # COE Review 2021
+  sub_assembly_lines: 3
+  turbine_assembly_cranes: 3
+  num_cranes : 3
 
 # Vessels
 array_cable_install_vessel: cable_lay_vessel
 export_cable_bury_vessel: cable_lay_vessel
 export_cable_install_vessel: cable_lay_vessel
-spi_vessel: scour_protection_vessel
-oss_install_vessel: heavy_lift_vessel
-wtiv: wtiv
-
-# Module Specific
-scour_protection_design:
-  cost_per_tonne: 40  # COE Review 2021
-  scour_protection_depth: 1  # COE Review 2021
-oss_design:
-  num_substations: 1
+mooring_install_vessel: support_vessel
+oss_install_vessel: floating_heavy_lift_vessel
+ahts_vessel: ahts_vessel
+towing_vessel: towing_vessel
+towing_vessel_groups:
+  num_groups : 1  # note these numbers are different than the default for ORBIT- I believe ORCA assumes only one installation group of 3 vessels total for floating
+  ahts_vessels: 1
+  towing_vessels: 2
 
 ArrayCableInstallation:
   site:
-    distance: 7593  # cable lay vessel transporting cables from Arco Felice, Italy
+    distance: 7593  # cable lay vessel transporting cables from Arco Felice, Italy, assume same logistics as fixed
 ExportCableInstallation:
   site:
-    distance: 116  # Assume Domestic, Charleston, SC
+    distance: 116  # Assume Domestic, Charleston, SC,assume same logistics as fixed
   export_system:
     onshore_construction_cost: 120000000  # $120m in onshore cable construction work according to industry benchmark
 OffshoreSubstationInstallation:
-  feeder: heavy_feeder
+  feeder: floating_barge
   num_feeders: 1
 
-
+# Module Specific
+substructure:
+  takt_time: 168
 array_system_design:
+  free_cable_length: 0.5
+  floating_cable_depth: 200
   cables:
-  - XLPE_630mm_66kV
-  location_data: base_osw_fixed
+  - XLPE_630mm_66kV_dynamic
+  location_data: base_osw_floating_layout
 export_system_design:
-  cables: XLPE_1200mm_220kV
+  cables: XLPE_1200mm_220kV_dynamic  # change to the 1200mm cable once pulling from right repo
   percent_added_length: 0.0
   landfall:
-    interconnection_distance: 9  # COE Review 2021
-    trench_length: 7  # COE Review 2021
-
+    interconnection_distance: 8  # COE Review 2021
+    trench_length: 6  # COE Review 2021
 # Configured Phases
 design_phases:
 - CustomArraySystemDesign
 - ElectricalDesign
-- MonopileDesign
-- ScourProtectionDesign
+- MooringSystemDesign
+- SemiSubmersibleDesign
 install_phases:
   ArrayCableInstallation: 0
   ExportCableInstallation: 0
-  MonopileInstallation: !!python/tuple
-  - ScourProtectionInstallation
-  - 0.5
+  MooredSubInstallation: 0
+  MooringSystemInstallation: 0
   OffshoreSubstationInstallation: 0
-  ScourProtectionInstallation: 0
-  TurbineInstallation: !!python/tuple
-  - MonopileInstallation
-  - 0.1
 
 project_parameters:
   turbine_capex: 1770  # COWER: 2024 Edition; Turbine CapEx
@@ -79,7 +78,7 @@ project_parameters:
   interest_during_construction: 0.065
   construction_insurance_factor: 0.0207  # according to industry benchmark
   decommissioning_factor: 0.2  # 20% of installation costs according to industry benchmark
-  site_auction_price: 5559666  # Lease Auction Price 2,039,968 + Lease Rent Pre-COD 3,519,698 (Assume OCS-A 0486)
+  site_auction_price: 103519698  # Lease Auction Price $100m + Lease Rent Pre-COD 3,519,698 (Assume floating lease sale)
 
   # 250m according to industry benchmark
   site_assessment_cost: 50000000  # modified so that total Project Development is 250m
