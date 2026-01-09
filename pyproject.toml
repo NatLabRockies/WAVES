@@ -12,7 +12,7 @@ requires-python = ">=3.10"
 license = {file = "LICENSE"}
 dependencies = [
     "wombat>=0.13.1",
-    "orbit-nrel>=1.2.6",
+    "orbit-nrel>=1.2.5",
     "floris>=4.2.2",
     "NREL-landbosse",
     "tqdm",
