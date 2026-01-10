@@ -10,7 +10,7 @@ kernelspec:
 ---
 
 (example_cower)=
-# Cost of Wind Energy Review 2024
+# Cost of Wind Energy Review 2025
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NREL/WAVES/main?filepath=examples)
 
