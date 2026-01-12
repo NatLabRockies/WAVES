@@ -9,6 +9,7 @@
   can be updated annually as needed.
 - A pre-commit workflow is added to be run against PRs into the main and develop branches to ensure
   code quality checks are passed.
+- Converts the Test PyPI and PyPI to use the trusted publisher functionality.
 
 ## v0.6.2 - 1 December 2025
 
