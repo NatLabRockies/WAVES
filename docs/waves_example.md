@@ -10,7 +10,7 @@ kernelspec:
 ---
 
 (example_cower)=
-# Cost of Wind Energy Review 2025
+# Cost of Wind Energy Review: 2025 Edition
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NREL/WAVES/main?filepath=examples)
 
@@ -219,11 +219,7 @@ metrics_configuration = {
         "metric": "energy_production",
         "kwargs": {"units": "mw", "per_capacity": "kw", "aep": True}
     },
-    "Net Capacity Factor With Wake Losses (%)": {
-        "metric": "capacity_factor",
-        "kwargs": {"which": "net"}
-    },
-    "Net Capacity Factor With All Losses (%)": {
+    "Net Capacity Factor (%)": {
         "metric": "capacity_factor",
         "kwargs": {"which": "net"}
     },
@@ -256,8 +252,7 @@ metrics_order = [
     "Annual OpEx per kW ($/kW)",
     "Energy Availability (%)",
     "Gross Capacity Factor (%)",
-    "Net Capacity Factor With Wake Losses (%)",
-    "Net Capacity Factor With All Losses (%)",
+    "Net Capacity Factor (%)",
     "AEP (MWh)",
     "AEP per kW (MWh/kW)",
     "LCOE ($/MWh)",
