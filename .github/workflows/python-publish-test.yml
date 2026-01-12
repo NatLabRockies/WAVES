@@ -14,12 +14,17 @@ jobs:
     environment: release-pypi
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
     runs-on: ubuntu-latest
+    environment:
+      name: release-pypi
+      url: https://test.pypi.org/p/waves
+    permissions:
+      id-token: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
@@ -32,7 +37,3 @@ jobs:
 
       - name: Publish package to Test PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          verbose: True
-          password: ${{ secrets.TEST_PYPI_PASSWORD }}
-          repository-url: https://test.pypi.org/legacy/
