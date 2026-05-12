@@ -325,9 +325,9 @@ class Project(FromDictMixin):
 
         self.check_consistent_config()
 
-        if self.connect_floris_to_layout:
+        if self.floris_config is not None and self.connect_floris_to_layout:
             self.connect_floris_to_turbines()
-        if self.connect_orbit_array_design and self.orbit_config is not None:
+        if self.orbit_config is not None and self.connect_orbit_array_design:
             self.connect_orbit_cable_lengths()
 
     # **********************************************************************************************
