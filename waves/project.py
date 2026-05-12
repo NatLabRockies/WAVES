@@ -929,9 +929,9 @@ class Project(FromDictMixin):
             self.orbit.run()
         elif self.landbosse_config is not None and "landbosse" not in skip:
             self.landbosse.run()
-        if "wombat" not in skip:
+        if self.wombat_config is not None and "wombat" not in skip:
             self.wombat.run()
-        if "floris" not in skip:
+        if self.floris_config is not None and "floris" not in skip:
             self.run_floris(set_kwargs=floris_kwargs, full_wind_rose=full_wind_rose)
 
     def reinitialize(
