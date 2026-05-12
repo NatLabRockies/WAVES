@@ -688,6 +688,7 @@ class Project(FromDictMixin):
         array = self.orbit._phases[name]
         locations = array.location_data.copy()
         cable_lengths = array.sections_cable_lengths.copy()
+        layout = self.wombat.windfarm.layout_df.copy()
 
         # Loop through the substations, then strings to combine the calculated cable lengths with
         # the appropriate turbines, according to the turbine order on each string
@@ -704,17 +705,14 @@ class Project(FromDictMixin):
 
         # Add the cable length values to the layout file
         id_ix = locations.id.values
-        self.wombat.windfarm.layout_df.loc[
-            self.wombat.windfarm.layout_df.id.isin(id_ix), "cable_length"
-        ] = locations.cable_length
+        layout.loc[layout.id.isin(id_ix), "cable_length"] = locations.cable_length
 
         # Save the updated data to the original layout locations
         if save_results:
             layout_file_name = self.wombat_config_dict["layout"]
-            self.wombat.windfarm.layout_df.to_csv(
-                self.library_path / "project/plant" / layout_file_name,
-                index=False,
-            )
+            layout.to_csv(self.library_path / "project/plant" / layout_file_name, index=False)
+
+        self.wombat.windfarm.layout_df = layout
 
         # Unset the ORBIT settings to ensure the design result isn't double counted
         self.setup_orbit()
