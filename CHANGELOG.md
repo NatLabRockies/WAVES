@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased
+
+- Creates the `generate_floris_layout` boolean input to enable automatically generating
+  FLORIS layout inputs from the existing layout file.
+- Adds more checks for existing configurations before attempting to access simulation objects.
+
 ## v0.7 - 12 January 2026
 
 - Supports WOMBAT v0.13.1+ to ensure the latest bug fixes and data updates are available to all users.
