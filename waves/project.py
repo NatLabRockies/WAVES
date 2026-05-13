@@ -341,13 +341,14 @@ class Project(FromDictMixin):
                 )
                 raise ValueError(msg)
             if self.generate_floris_layout:
+                self.connect_floris_to_layout = True
                 self.generate_floris_positions_from_layout(
                     x_col=self.floris_x_col, y_col=self.floris_y_col
                 )
 
         self.check_consistent_config()
 
-        if self.floris_config is not None:
+        if self.floris_config is not None and self.connect_floris_to_layout:
             self.connect_floris_to_turbines()
 
         if self.orbit_config is not None and self.connect_orbit_array_design:
