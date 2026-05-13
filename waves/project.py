@@ -333,7 +333,6 @@ class Project(FromDictMixin):
         self.setup_wombat()
         self.setup_floris()
 
-        connect_floris = False
         if self.floris_config is not None:
             if self.connect_floris_to_layout and self.generate_floris_layout:
                 msg = (
@@ -341,8 +340,6 @@ class Project(FromDictMixin):
                     " `generate_floris_layout`."
                 )
                 raise ValueError(msg)
-            if self.connect_floris_to_layout:
-                connect_floris = True
             if self.generate_floris_layout:
                 self.generate_floris_positions_from_layout(
                     x_col=self.floris_x_col, y_col=self.floris_y_col
@@ -350,7 +347,7 @@ class Project(FromDictMixin):
 
         self.check_consistent_config()
 
-        if connect_floris:
+        if self.floris_config is not None:
             self.connect_floris_to_turbines()
 
         if self.orbit_config is not None and self.connect_orbit_array_design:
