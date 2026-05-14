@@ -2673,7 +2673,7 @@ class Project(FromDictMixin):
             aep = self.energy_production(units="mw", per_capacity="mw", aep=True)
         if TYPE_CHECKING:
             assert isinstance(capex, float) and isinstance(opex, float) and isinstance(aep, float)
-        return (capex * self.fixed_charge_rate + opex / self.operations_years) / (aep / 1000)
+        return (capex * fixed_charge_rate + opex / self.operations_years) / (aep / 1000)
 
     def generate_report(
         self,
