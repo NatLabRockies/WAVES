@@ -1,12 +1,15 @@
 """Script to generate results for the IEA Wind Task 49 O&M model comparison between NREL's WOMBAT
-model (with WAVES supplement for additonal results calculation) and TNO's UWISE model.
+model (with WAVES supplement for additional results calculation) and TNO's UWISE model.
+
+IMPORTANT: This analysis was originally run using the changes applied to the WOMBAT v0.12.x release
+cycle, and WAVES 0.5.3, though 0.6x should also be compatible.
 """
 
 # /// script
 # requires-python = "==3.11"
 # dependencies = [
-#   "waves>=0.5.3",
-#   "wombat>=0.11.3",
+#   "waves>=0.5.3,<0.7",
+#   "wombat>=0.11.3,<0.13",
 #   "rich",
 #   "openpyxl",
 # ]
