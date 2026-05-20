@@ -1,0 +1,87 @@
+# Fixed bottom base case
+site:
+  depth: 34  # COE Review 2021
+  distance: 116  # COE Review 2021
+  distance_to_landfall: 50  # COE Review 2021
+  mean_windspeed: 9.17  # avg from weather profile in the Vineyard Wind 1 site
+plant:
+  layout: custom
+  num_turbines: 50
+  row_spacing: 7
+  turbine_spacing: 7
+turbine: 12MW_generic
+port:
+  sub_assembly_lines: 1  # COE Review 2021
+  turbine_assembly_cranes: 1  # COE Review 2021
+
+# Vessels
+array_cable_install_vessel: cable_lay_vessel
+export_cable_bury_vessel: cable_lay_vessel
+export_cable_install_vessel: cable_lay_vessel
+spi_vessel: scour_protection_vessel
+oss_install_vessel: heavy_lift_vessel
+wtiv: wtiv
+
+# Module Specific
+scour_protection_design:
+  cost_per_tonne: 40  # COE Review 2021
+  scour_protection_depth: 1  # COE Review 2021
+oss_design:
+  num_substations: 1
+
+ArrayCableInstallation:
+  site:
+    distance: 7593  # cable lay vessel transporting cables from Arco Felice, Italy
+ExportCableInstallation:
+  site:
+    distance: 116  # Assume Domestic, Charleston, SC
+  export_system:
+    onshore_construction_cost: 120000000  # $120m in onshore cable construction work according to industry benchmark
+OffshoreSubstationInstallation:
+  feeder: heavy_feeder
+  num_feeders: 1
+
+
+array_system_design:
+  cables:
+  - XLPE_630mm_66kV
+  location_data: base_osw_fixed_layout
+export_system_design:
+  cables: XLPE_1200mm_220kV
+  percent_added_length: 0.0
+  landfall:
+    interconnection_distance: 9  # COE Review 2021
+    trench_length: 7  # COE Review 2021
+
+# Configured Phases
+design_phases:
+- CustomArraySystemDesign
+- ElectricalDesign
+- MonopileDesign
+- ScourProtectionDesign
+install_phases:
+  ArrayCableInstallation: 0
+  ExportCableInstallation: 0
+  MonopileInstallation: !!python/tuple
+  - ScourProtectionInstallation
+  - 0.5
+  OffshoreSubstationInstallation: 0
+  ScourProtectionInstallation: 0
+  TurbineInstallation: !!python/tuple
+  - MonopileInstallation
+  - 0.1
+
+project_parameters:
+  turbine_capex: 1770  # COWER: 2024 Edition; Turbine CapEx
+
+  # commented out given DOE's comments about leaving this out for comparability with other technologies
+  # supply_chain_capex: 756 # 439 $/kW for investments and 317 $/kW for vessels
+  interest_during_construction: 0.065
+  construction_insurance_factor: 0.0207  # according to industry benchmark
+  decommissioning_factor: 0.2  # 20% of installation costs according to industry benchmark
+  site_auction_price: 5559666  # Lease Auction Price 2,039,968 + Lease Rent Pre-COD 3,519,698 (Assume OCS-A 0486)
+
+  # 250m according to industry benchmark
+  site_assessment_cost: 50000000  # modified so that total Project Development is 250m
+  construction_plan_cost: 10000000  # modified so that total Project Development is 250m
+  installation_plan_cost: 100000000  # modified so that total Project Development is 250m

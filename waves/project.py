@@ -17,16 +17,15 @@ import yaml
 import attrs
 import numpy as np
 import pandas as pd
-import pyarrow as pa
 import networkx as nx
-import pyarrow.csv  # pylint: disable=W0611
 import numpy_financial as npf
 import matplotlib.pyplot as plt
 from attrs import field, define
 from ORBIT import ProjectManager, load_config
 from floris import WindRose, TimeSeries, FlorisModel
+from wombat import Simulation
 from landbosse import landbosse_runner  # noqa: E402
-from wombat.core import Simulation
+from wombat.core import library
 from wombat.core.data_classes import FromDictMixin
 
 from waves.utilities import (
@@ -79,14 +78,12 @@ def convert_to_multi_index(
 
 
 def load_weather(value: str | Path | pd.DataFrame) -> pd.DataFrame:
-    """Loads in the weather file using PyArrow, but returing a ``pandas.DataFrame``
-    object. Must have the column "datetime", which can be converted to a
-    ``pandas.DatetimeIndex``.
+    """Loads in the weather file using the WOMBAT loading functionality, and removes
+    the extra columns that only WOMBAT will use and initialize internally.
 
     Args:
         value : str | Path | pd.DataFrame
-            The input file name and path, or a ``pandas.DataFrame`` (gets passed back
-            without modification).
+            The input file name and path, or a ``pandas.DataFrame``.
 
     Returns
     -------
@@ -94,29 +91,11 @@ def load_weather(value: str | Path | pd.DataFrame) -> pd.DataFrame:
             The full weather profile with the column "datetime" as a ``pandas.DatetimeIndex``.
     """
     if isinstance(value, pd.DataFrame):
-        return value
+        weather = library.format_weather(value)
+    else:
+        weather = library.load_weather(value)
 
-    value = resolve_path(value)
-    convert_options = pa.csv.ConvertOptions(
-        timestamp_parsers=[
-            "%m/%d/%y %H:%M",
-            "%m/%d/%y %I:%M",
-            "%m/%d/%Y %H:%M",
-            "%m/%d/%Y %I:%M",
-            "%m-%d-%y %H:%M",
-            "%m-%d-%y %I:%M",
-            "%m-%d-%Y %H:%M",
-            "%m-%d-%Y %I:%M",
-        ]
-    )
-    weather = (
-        pa.csv.read_csv(value, convert_options=convert_options)
-        .to_pandas()
-        .set_index("datetime")
-        .fillna(0.0)
-        .resample("h")
-        .interpolate(limit_direction="both", limit=5)
-    )
+    weather = weather.to_pandas().drop(columns=["index", "hour"]).set_index("datetime")
     return weather
 
 

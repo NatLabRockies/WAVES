@@ -9,10 +9,11 @@ authors = [{name = "Rob Hammond", email = "rob.hammond@nrel.gov"}]
 readme = "README.md"
 description = "Wind Asset Value Estimation System"
 requires-python = ">=3.10"
-license = {file = "LICENSE"}
+# license = "Apache-2.0"
+license-files = ["LICENSE"]
 dependencies = [
-    "wombat>=0.11",
-    "orbit-nrel>=1.2.1",
+    "wombat>=0.13.1",
+    "orbit-nrel>=1.2.5",
     "floris>=4.2.2",
     "NREL-landbosse",
     "tqdm",
@@ -73,7 +74,7 @@ dev = [
     "ruff",
 ]
 docs = [
-    "jupyter-book",
+    "jupyter-book>=1,<2",
     "myst-nb",
     "myst-parser",
     "sphinx-autodoc-typehints",

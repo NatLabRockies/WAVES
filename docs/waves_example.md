@@ -9,17 +9,20 @@ kernelspec:
   name: python3
 ---
 
-(example_cower_2022)=
-# Cost of Wind Energy Review 2022
+(example_cower)=
+# Cost of Wind Energy Review: 2025 Edition
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NREL/WAVES/main?filepath=examples)
 
 Be sure to install `pip install "waves[examples]"` (or `pip install ".[examples]"`) to work with
 this example.
 
-This example will walk through the process of running a subset of the 2022 Cost of Wind Energy
-Review (COWER) analysis to demonstrate an analysis workflow. Please note, that this is not the exact
-workflow because it has been broken down to highlight some of the key features of WAVES. Similarly,
-this will stay up to date with WAVES's dependencies, namely ORBIT, WOMBAT, and FLORIS, so results
-may change slightly between this *example* relying on the configurations and the published results.
+This example will walk through the process of running a subset of the current year's Cost of Wind
+Energy Review (COWER) analysis to demonstrate an analysis workflow. Please note, that this is not
+the exact workflow because it has been broken down to highlight some of the key features of WAVES.
+Similarly, this will stay up to date with WAVES's dependencies, namely ORBIT, WOMBAT, and FLORIS,
+so results may change slightly between this *example* relying on the configurations and the
+published results.
 
 ````{note}
 To run these examples from the command line, the below command can be used, which will dipslay and
@@ -30,10 +33,10 @@ information in the command line wherever WAVES is installed.
 # NOTE: This is run from the top level of WAVES/
 
 # Run one example
-waves library/base_2022 base_fixed_bottom_2022.yaml
+waves library/base base_osw_fixed.yaml
 
 # Run both examples, but don't save the results
-waves library/base_2022 base_fixed_bottom_2022.yaml base_floating_2022.yaml --no-save-report
+waves library/base base_osw_fixed.yaml base_osw_floating.yaml --no-save-report
 ```
 ````
 
@@ -63,7 +66,7 @@ the configurations. For a complete guide and definition, please see either the
 
 ````{warning}
 If your FLORIS installation is <3.6, then the FLORIS configuration files in
-`library/base_2022/project/config/` will have to be updated so that line 107 (same line number for
+`library/base/project/config/` will have to be updated so that line 107 (same line number for
 fixed bottom and floating) is using an absolute path like the example below.
 
 ```yaml
@@ -71,14 +74,14 @@ fixed bottom and floating) is using an absolute path like the example below.
 turbine_library_path: ../../turbines
 
 # updated absolute path, replace <path_to_waves> in your own files
-turbine_library_path: <path_to_waves>/WAVES/library/base_2022/turbines/
+turbine_library_path: <path_to_waves>/WAVES/library/base/turbines/
 ```
 ````
 
 ```{code-cell} ipython3
-library_path = Path("../library/base_2022/")
-config_fixed = load_yaml(library_path / "project/config", "base_fixed_bottom_2022.yaml")
-config_floating = load_yaml(library_path / "project/config", "base_floating_2022.yaml")
+library_path = Path("../library/base")
+config_fixed = load_yaml(library_path / "project/config", "base_osw_fixed.yaml")
+config_floating = load_yaml(library_path / "project/config", "base_osw_floating.yaml")
 
 # This example was designed prior to the FLORIS 3.6 release, so the path to the turbine library in
 # FLORIS must be manually updated, but this example must work for all users, so a dynamic method
@@ -100,19 +103,19 @@ WAVES command line interface (CLI).
 config_fixed.update({"library_path": library_path,})
 config_floating.update({"library_path": library_path,})
 
-start1 = perf_counter()
+start = perf_counter()
 
 project_fixed = Project.from_dict(config_fixed)
 
-end1 = perf_counter()
+end = perf_counter()
+print(f"Fixed bottom loading time: {(end-start):,.2f} seconds")
 
-start2 = perf_counter()
+start = perf_counter()
 
 project_floating = Project.from_dict(config_floating)
 
-end2 = perf_counter()
-print(f"Fixed bottom loading time: {(end1-start1):,.2f} seconds")
-print(f"Floating loading time: {(end2-start2):,.2f} seconds")
+end = perf_counter()
+print(f"Floating loading time: {(end-start):,.2f} seconds")
 ```
 
 ### Visualize the wind farm
@@ -137,37 +140,34 @@ of the year, for a more accurate energy output. However, we're using just the we
 in the O&M phase: `full_wind_rose=False`.
 
 ```{code-cell} ipython3
-start1 = perf_counter()
+start = perf_counter()
 project_fixed.run(
-    which_floris="wind_rose",  # month-based wind rose wake analysis
     full_wind_rose=False,  # use the WOMBAT date range
-    floris_reinitialize_kwargs={"cut_in_wind_speed": 3.0, "cut_out_wind_speed": 25.0}  # standard ws range
+    floris_kwargs={"cut_in_wind_speed": 3.0, "cut_out_wind_speed": 25.0}  # standard ws range
 )
 project_fixed.wombat.env.cleanup_log_files()  # Delete logging data from the WOMBAT simulations
-end1 = perf_counter()
+end = perf_counter()
+print(f"Fixed run time: {end - start:,.2f} seconds")
 
-start2 = perf_counter()
+start = perf_counter()
 project_floating.run(
-    which_floris="wind_rose",
     full_wind_rose=False,
-    floris_reinitialize_kwargs=dict(cut_in_wind_speed=3.0, cut_out_wind_speed=25.0)
+    floris_kwargs=dict(cut_in_wind_speed=3.0, cut_out_wind_speed=25.0)
 )
 project_floating.wombat.env.cleanup_log_files()  # Delete logging data from the WOMBAT simulations
-end2 = perf_counter()
+end = perf_counter()
 
-print("-" * 29)  # separate our timing from the ORBIT and FLORIS run-time warnings
-print(f"Fixed run time: {end1 - start1:,.2f} seconds")
-print(f"Floating run time: {end2 - start2:,.2f} seconds")
+print(f"Floating run time: {end - start:,.2f} seconds")
 ```
 
 Both of these examples can also be run via the CLI, though the FLORIS `turbine_library_path`
 configuration will have to be manually updated in each file to ensure the examples run.
 
 ```console
-waves path/to/library/base_2022/ base_fixed_bottom_2022.yaml base_floating_bottom_2022.yaml --no-save-report
+waves path/to/library/base/ base_osw_fixed.yaml base_osw_floating.yaml --no-save-report
 ```
 
-(example_cower_2022:results)=
+(example_cower:results)=
 ## Gather the results
 
 Another of the conveniences with using WAVES to run all three models is that some of the core
@@ -213,19 +213,15 @@ metrics_configuration = {
     "OpEx per kW ($/kW)": {"metric": "opex", "kwargs": {"per_capacity": "kw"}},
     "AEP (MWh)": {
         "metric": "energy_production",
-        "kwargs": {"units": "mw", "aep": True, "with_losses": True}
+        "kwargs": {"units": "mw", "aep": True}
     },
     "AEP per kW (MWh/kW)": {
         "metric": "energy_production",
-        "kwargs": {"units": "mw", "per_capacity": "kw", "aep": True, "with_losses": True}
+        "kwargs": {"units": "mw", "per_capacity": "kw", "aep": True}
     },
-    "Net Capacity Factor With Wake Losses (%)": {
+    "Net Capacity Factor (%)": {
         "metric": "capacity_factor",
         "kwargs": {"which": "net"}
-    },
-    "Net Capacity Factor With All Losses (%)": {
-        "metric": "capacity_factor",
-        "kwargs": {"which": "net", "with_losses": True}
     },
     "Gross Capacity Factor (%)": {
         "metric": "capacity_factor",
@@ -256,8 +252,7 @@ metrics_order = [
     "Annual OpEx per kW ($/kW)",
     "Energy Availability (%)",
     "Gross Capacity Factor (%)",
-    "Net Capacity Factor With Wake Losses (%)",
-    "Net Capacity Factor With All Losses (%)",
+    "Net Capacity Factor (%)",
     "AEP (MWh)",
     "AEP per kW (MWh/kW)",
     "LCOE ($/MWh)",
@@ -319,8 +314,8 @@ df_capex
 Now, let's generate the report, and then add in some additional reporting variables.
 
 ```{code-cell} ipython3
-project_name_fixed = "COE 2022 - Fixed"
-project_name_floating = "COE 2022 - Floating"
+project_name_fixed = "Fixed"
+project_name_floating = "Floating"
 
 # Generate the reports using WAVES and the above configurations
 # NOTE: the results are transposed to view them more easily for the example, otherwise
