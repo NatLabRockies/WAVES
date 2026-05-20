@@ -1,0 +1,3 @@
+id,substation_id,name,type,latitude,longitude,string_actual,order_actual,string,order,distance,subassembly,upstream_cable,easting,northing,floris_x,floris_y,cable_length,bury_speed
+B6,OSS,B6,turbine,40.9653979,-124.6177122,0.0,0.0,0.0,0.0,0.0,15MW_core_wind_floating.yaml,array_core_wind.yaml,14298.3,10194.2,14298.3,10194.2,3.842559070851844,0
+OSS,OSS,OSS,substation,40.9319,-124.6145,,,,,,offshore_substation_core_wind.yaml,export_core_wind.yaml,14568.7,6474.16,14568.7,6474.16,0.0,0
