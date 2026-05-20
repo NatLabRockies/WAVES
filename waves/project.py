@@ -155,11 +155,18 @@ class Project(FromDictMixin):
 
     connect_floris_to_layout : bool, optional
         If True, automatically connect the FLORIS and WOMBAT layout files, so that
-        the simulation results can be linked. If False, don't connec the two models.
+        the simulation results can be linked. If False, don't connect the two models.
         Defaults to True.
 
         .. note:: This should only be set to False if the FLORIS and WOMBAT layouts
-            need to be connected in an additional step
+            need to be connected in an additional step. Cannot be used in conjunction
+            with :py:attr:`generate_floris_layout`.
+
+    generate_floris_layout: bool, optional
+        If True, automatically create the FLORIS layout inputs based on the WOMBAT
+        layout file and the inputs to :py:attr:`floris_x_col` and :py:attr:`floris_y_col`.
+
+        .. note:: Cannot use this in conjunction with :py:attr:`connect_floris_to_layout`.
 
     connect_orbit_array_design : bool, optional
         If True, the ORBIT array cable lengths will be calculated on initialization
@@ -253,6 +260,9 @@ class Project(FromDictMixin):
     connect_floris_to_layout: bool = field(
         default=True, validator=attrs.validators.instance_of(bool)
     )
+    generate_floris_layout: bool = field(
+        default=False, validator=attrs.validators.instance_of(bool)
+    )
     connect_orbit_array_design: bool = field(
         default=True, validator=attrs.validators.instance_of(bool)
     )
@@ -323,11 +333,25 @@ class Project(FromDictMixin):
         self.setup_wombat()
         self.setup_floris()
 
+        if self.floris_config is not None:
+            if self.connect_floris_to_layout and self.generate_floris_layout:
+                msg = (
+                    "Cannot simultaneously use `connect_floris_to_layout` and"
+                    " `generate_floris_layout`."
+                )
+                raise ValueError(msg)
+            if self.generate_floris_layout:
+                self.connect_floris_to_layout = True
+                self.generate_floris_positions_from_layout(
+                    x_col=self.floris_x_col, y_col=self.floris_y_col
+                )
+
         self.check_consistent_config()
 
-        if self.connect_floris_to_layout:
+        if self.floris_config is not None and self.connect_floris_to_layout:
             self.connect_floris_to_turbines()
-        if self.connect_orbit_array_design and self.orbit_config is not None:
+
+        if self.orbit_config is not None and self.connect_orbit_array_design:
             self.connect_orbit_cable_lengths()
 
     # **********************************************************************************************
@@ -688,6 +712,7 @@ class Project(FromDictMixin):
         array = self.orbit._phases[name]
         locations = array.location_data.copy()
         cable_lengths = array.sections_cable_lengths.copy()
+        layout = self.wombat.windfarm.layout_df.copy()
 
         # Loop through the substations, then strings to combine the calculated cable lengths with
         # the appropriate turbines, according to the turbine order on each string
@@ -704,17 +729,14 @@ class Project(FromDictMixin):
 
         # Add the cable length values to the layout file
         id_ix = locations.id.values
-        self.wombat.windfarm.layout_df.loc[
-            self.wombat.windfarm.layout_df.id.isin(id_ix), "cable_length"
-        ] = locations.cable_length
+        layout.loc[layout.id.isin(id_ix), "cable_length"] = locations.cable_length
 
         # Save the updated data to the original layout locations
         if save_results:
             layout_file_name = self.wombat_config_dict["layout"]
-            self.wombat.windfarm.layout_df.to_csv(
-                self.library_path / "project/plant" / layout_file_name,
-                index=False,
-            )
+            layout.to_csv(self.library_path / "project/plant" / layout_file_name, index=False)
+
+        self.wombat.windfarm.layout_df = layout
 
         # Unset the ORBIT settings to ensure the design result isn't double counted
         self.setup_orbit()
@@ -732,9 +754,15 @@ class Project(FromDictMixin):
         Parameters
         ----------
         x_col : str, optional
-            The relative, distance-based x-coordinate column name. Defaults to "easting".
+            The relative, distance-based x-coordinate column name. Creates a new "floris_x" column
+            in the WOMBAT layout based on the relative position from the minimum value to create a
+            grid of positive numbers, unless "floris_x" is passed, then coordinates are assumed to
+            be all positive. Defaults to "easting".
         y_col : str, optional
-            The relative, distance-based y-coordinate column name. Defaults to "northing".
+            The relative, distance-based y-coordinate column name. Creates a new "floris_y" column
+            in the WOMBAT layout based on the relative position from the minimum value to create a
+            grid of positive numbers, unless "floris_y" is passed, then coordinates are assumed to
+            be all positive. Defaults to "northing".
         update_config : bool, optional
             Run ``FlorisInterface.reinitialize`` with the updated ``layout_x`` and ``layout_y``
             values. Defaults to True.
@@ -743,12 +771,15 @@ class Project(FromDictMixin):
             Defaults to None.
         """
         layout = self.wombat.windfarm.layout_df
-        x_min = layout[x_col].min()
-        y_min = layout[y_col].min()
-        layout.assign(floris_x=layout[x_col] - x_min, floris_y=layout[y_col] - y_min)
-        layout = layout.loc[
-            layout.id.isin(self.wombat.windfarm.turbine_id), ["floris_x", "floris_y"]
-        ]
+        turbines = self.wombat.windfarm.turbine_id
+        if x_col != "floris_x":
+            x_min = layout[x_col].min()
+            layout.assign(floris_x=layout[x_col] - x_min)
+        if y_col != "floris_y":
+            y_min = layout[y_col].min()
+            layout.assign(floris_y=layout[y_col] - y_min)
+
+        layout = layout.loc[layout.id.isin(turbines), ["floris_x", "floris_y"]]
         x, y = layout.values.T
         self.floris.set(layout_x=x, layout_y=y)
         if update_config:
@@ -931,9 +962,9 @@ class Project(FromDictMixin):
             self.orbit.run()
         elif self.landbosse_config is not None and "landbosse" not in skip:
             self.landbosse.run()
-        if "wombat" not in skip:
+        if self.wombat_config is not None and "wombat" not in skip:
             self.wombat.run()
-        if "floris" not in skip:
+        if self.floris_config is not None and "floris" not in skip:
             self.run_floris(set_kwargs=floris_kwargs, full_wind_rose=full_wind_rose)
 
     def reinitialize(
@@ -2642,7 +2673,7 @@ class Project(FromDictMixin):
             aep = self.energy_production(units="mw", per_capacity="mw", aep=True)
         if TYPE_CHECKING:
             assert isinstance(capex, float) and isinstance(opex, float) and isinstance(aep, float)
-        return (capex * self.fixed_charge_rate + opex / self.operations_years) / (aep / 1000)
+        return (capex * fixed_charge_rate + opex / self.operations_years) / (aep / 1000)
 
     def generate_report(
         self,
