@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Unreleased
+
+- Adds a `loss` boolean flag to `Project.revenue()` to get the lost revenue from
+  downtime, wakes, etc.
+- Adds the UWise comparison code and the updated configuration library `IEA_49/` to support the
+  analysis.
+
 ## v0.7 - 12 January 2026
 
 - Supports WOMBAT v0.13.1+ to ensure the latest bug fixes and data updates are available to all users.
