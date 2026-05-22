@@ -508,10 +508,12 @@ class Project(FromDictMixin):
         num_substations = {}
 
         if bool(self.orbit_config_dict):
+            orbit_num_substation = None
             num_turbines["orbit"] = self.orbit_config_dict["plant"]["num_turbines"]
-            orbit_num_substation = self.orbit_config_dict.get("oss_design", {}).get(
-                "num_substations"
-            )
+            if (oss_design := self.orbit_config_dict.get("oss_design")) is not None:
+                orbit_num_substation = oss_design.get("num_substations")
+            elif (oss_design := self.orbit_config_dict.get("substation_design")) is not None:
+                orbit_num_substation = oss_design.get("num_substations")
             if orbit_num_substation is not None:
                 num_substations["orbit"] = orbit_num_substation
 
@@ -1127,13 +1129,16 @@ class Project(FromDictMixin):
         int
             The number of substations in the project.
         """
-        if self.orbit_config is not None and "OffshoreSubstationDesign" not in self.orbit._phases:
-            return self.orbit_config_dict["oss_design"]["num_substations"]
+        if self.orbit_config is not None:
+            if "OffshoreSubstationDesign" in self.orbit._phases:
+                return self.orbit_config_dict["oss_design"]["num_substations"]
+            if "FloatingSubstationDesign" in self.orbit._phases:
+                return self.orbit_config_dict["substation_design"]["num_substations"]
         elif self.landbosse_config is not None:
             return 1
         if self.wombat_config is not None:
             return len(self.wombat.windfarm.substation_id)
-        raise RuntimeError("No models were provided, cannot calculate value.")
+        raise RuntimeError("No models with substations were provided, cannot calculate value.")
 
     @validate_common_inputs(which=["units"])
     def capacity(self, units: str = "mw") -> float:
