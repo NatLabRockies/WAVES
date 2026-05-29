@@ -5,6 +5,10 @@
 - Creates the `generate_floris_layout` boolean input to enable automatically generating
   FLORIS layout inputs from the existing layout file.
 - Adds more checks for existing configurations before attempting to access simulation objects.
+- Adds a `loss` boolean flag to `Project.revenue()` to get the lost revenue from
+  downtime, wakes, etc.
+- Adds the UWise comparison code and the updated configuration library `IEA_49/` to support the
+  analysis.
 - Fixes a bug where floating offshore substation design and installation results cause the
   the code to error out when extracting substation results in ORBIT.
 
