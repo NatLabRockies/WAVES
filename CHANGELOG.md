@@ -9,6 +9,8 @@
   downtime, wakes, etc.
 - Adds the UWise comparison code and the updated configuration library `IEA_49/` to support the
   analysis.
+- Fixes a bug where floating offshore substation design and installation results cause the
+  the code to error out when extracting substation results in ORBIT.
 
 ## v0.7 - 12 January 2026
 
