@@ -11,6 +11,8 @@
   analysis.
 - Fixes a bug where floating offshore substation design and installation results cause the
   the code to error out when extracting substation results in ORBIT.
+- Changes all references to NREL to NLR for the lab's name change from the National Renewable
+  Energy Laboratory to the National Laboratory of the Rockies.
 
 ## v0.7 - 12 January 2026
 

@@ -10,4 +10,4 @@ crew:
   hourly_rate: 0
   n_hourly_rate: 0
 n_crews: 2  # maximum number of simultaneously operating crews to repair individual failures on a turbine
-annual_fee: 8100000 # https://www.nrel.gov/docs/fy22osti/83502.pdf
+annual_fee: 8100000 # https://www.nlr.gov/docs/fy22osti/83502.pdf

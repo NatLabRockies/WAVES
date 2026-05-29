@@ -175,7 +175,7 @@ class Project(FromDictMixin):
         The price paid per MWh of energy produced. Defaults to None.
     fixed_charge_rate : float, optional
         Revenue per amount of investment required to cover the investment cost, with the default
-        provided through the NREL 2021 Cost of Energy report [1]_. Defaults to 0.0582.
+        provided through the NLR 2021 Cost of Energy report [1]_. Defaults to 0.0582.
     discount_rate : float, optional
         The minimum acceptable rate of return, or the assumed return on an alternative
         investment of comparable risk. Defaults to None.
@@ -1765,7 +1765,7 @@ class Project(FromDictMixin):
                 + 0.0000000000029271 * distance_to_landfall**5
             ) / 100
         else:
-            # https://www.nrel.gov/docs/fy22osti/78715.pdf Fig30
+            # https://www.nlr.gov/docs/fy22osti/78715.pdf Fig30
             electrical_loss_ratio = 0.028
 
         return electrical_loss_ratio
@@ -1779,7 +1779,7 @@ class Project(FromDictMixin):
         electrical losses.
 
         .. note:: This method treats different types of losses as efficiencies and is applied
-        as in Equation 1 from Beiter et al. 2020 (https://www.nrel.gov/docs/fy21osti/77384.pdf).
+        as in Equation 1 from Beiter et al. 2020 (https://www.nlr.gov/docs/fy21osti/77384.pdf).
 
         Parameters
         ----------
@@ -2897,7 +2897,7 @@ class Project(FromDictMixin):
     def generate_report_project_details(self) -> pd.DataFrame:
         """Generates a DataFrame containing detailed project information, following the format
         from the table at slide 64 in the Cost of Wind Energy Review: 2024 Edition
-        (https://www.nrel.gov/docs/fy25osti/91775.pdf).
+        (https://www.nlr.gov/docs/fy25osti/91775.pdf).
 
         This function collects various project parameters such as turbine specifications, wind speed
         data,energy capture, and efficiency metrics, and formats them into a comprehensive report.

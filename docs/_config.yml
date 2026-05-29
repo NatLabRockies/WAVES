@@ -32,7 +32,7 @@ bibtex_bibfiles:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/NREL/WAVES
+  url: https://github.com/NatLabRockies/WAVES
   path_to_book: docs  # Optional path to your book, relative to the repository root
   branch: main  # Which branch of the repository should be used when creating links (optional)
 
@@ -43,7 +43,7 @@ repository:
 #   use_issues_button: true
 #   use_repository_button: true
 #   use_edit_page_button: true
-#   baseurl: http://nrel.github.io/WAVES
+#   baseurl: http://natlabrockies.github.io/WAVES
 
 sphinx:
   extra_extensions:
@@ -61,12 +61,12 @@ sphinx:
       use_repository_button: true
       use_edit_page_button: true
       show_toc_level: 2
-      repository_url: "https://github.com/NREL/WAVES"
+      repository_url: "https://github.com/NatLabRockies/WAVES"
       repository_branch: main
       icon_links: [
         {
             name: GitHub,
-            url: "https://github.com/NREL/WAVES",
+            url: "https://github.com/NatLabRockies/WAVES",
             icon: fa-brands fa-github,
         },
         {
@@ -77,7 +77,7 @@ sphinx:
         },
         {
             name: Binder,
-            url: "https://mybinder.org/v2/gh/NREL/WAVES/main?filepath=examples",
+            url: "https://mybinder.org/v2/gh/NatLabRockies/WAVES/main?filepath=examples",
             icon: "https://mybinder.org/badge_logo.svg",
             type: url,
         },

@@ -9,7 +9,7 @@
 ## Getting Started
 
 These contributing guidelines should be read by software developers wishing to contribute code or
-documentation changes into WAVES, or to push changes upstream to the main NREL/WAVES repository.
+documentation changes into WAVES, or to push changes upstream to the main NatLabRockies/WAVES repository.
 
 1. Create a fork of WAVES on GitHub
 2. Clone your fork of the repository
@@ -41,9 +41,9 @@ documentation changes into WAVES, or to push changes upstream to the main NREL/W
    pre-commit install
    ```
 
-## Keeping your fork in sync with NREL/WAVES
+## Keeping your fork in sync with NatLabRockies/WAVES
 
-The "main" WAVES repository is regularly updated with ongoing research at NREL and beyond. After
+The "main" WAVES repository is regularly updated with ongoing research at NLR and beyond. After
 creating and cloning your fork from the previous section, you might be wondering how to keep it
 up to date with the latest improvements.
 
@@ -58,14 +58,14 @@ inevitably arise in development work.
    cd /your/path/to/WAVES/
    ```
 
-2. If you haven't already, add NREL/WAVES as the "upstream" location (or whichever naming
+2. If you haven't already, add NatLabRockies/WAVES as the "upstream" location (or whichever naming
    convention you prefer).
 
    ```bash
-   git remote add upstream https://github.com/NREL/WAVES.git
+   git remote add upstream https://github.com/NatLabRockies/WAVES.git
    ```
 
-   To find the name you've given NREL/WAVES again, you can simply run the following to display
+   To find the name you've given NatLabRockies/WAVES again, you can simply run the following to display
    all of the remote sources you're tracking.
 
    ```bash
@@ -78,7 +78,7 @@ inevitably arise in development work.
    git fetch --all
    ```
 
-4. Sync the upstream (NREL) changes
+4. Sync the upstream (NLR) changes
 
    ```bash
    # If there was a new release this will need to be updated
@@ -101,10 +101,10 @@ inevitably arise in development work.
 ## Issue Tracking
 
 New feature requests, changes, enhancements, non-methodology features, and bug reports can be filed
-as new issues in the [Github.com issue tracker](https://github.com/NREL/WAVES/issues) at any time.
+as new issues in the [Github.com issue tracker](https://github.com/NatLabRockies/WAVES/issues) at any time.
 Please be sure to fully describe the issue.
 
-For other issues, please email rob.hammond@nrel.gov.
+For other issues, please email rob.hammond@nlr.gov.
 
 ### Issue Submission Checklist
 
@@ -123,7 +123,7 @@ For other issues, please email rob.hammond@nrel.gov.
 
 ## Repository
 
-The WAVES repository is hosted on Github, and located here: http://github.com/NREL/WAVES
+The WAVES repository is hosted on Github, and located here: http://github.com/NatLabRockies/WAVES
 
 This repository is organized using a modified git-flow system. Branches are organized as follows:
 
@@ -138,8 +138,8 @@ To work on a feature, please fork WAVES first and then create a feature branch i
 Work out of this feature branch before submitting a pull request.
 Be sure to periodically synchronize the upstream develop branch into your feature branch to avoid conflicts in the pull request.
 
-When your branch is ready, make a pull request to NREL/WAVES through the
-[GitHub web interface](https://github.com/NREL/WAVES/pulls).
+When your branch is ready, make a pull request to NatLabRockies/WAVES through the
+[GitHub web interface](https://github.com/NatLabRockies/WAVES/pulls).
 
 ## Coding Style
 
@@ -281,5 +281,5 @@ over time, regardless of who the core developers are.
    ```
 
 - Deploying a Package to PyPi
-  - The repository is equipped with a github action to build and publish new versions to PyPI. A maintainer can invoke this workflow by pushing a tag to the NREL/WAVES repository with prefix "v", such as "v1.2.3".
+  - The repository is equipped with a github action to build and publish new versions to PyPI. A maintainer can invoke this workflow by pushing a tag to the NatLabRockies/WAVES repository with prefix "v", such as "v1.2.3".
   - The action is defined in `.github/workflows/tags-to-pypi.yml`.
