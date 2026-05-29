@@ -53,7 +53,7 @@ def compute_shear(
     The shear coefficient is calculated by evaluating the expression for an Ordinary Least
     Squares (OLS) regression coefficient. The power law is used to model the relationship
     between wind speed and sensor height. This function is based on the implementation
-    provided by OpenOA (https://github.com/NREL/OpenOA)
+    provided by OpenOA (https://github.com/NatLabRockies/OpenOA)
 
     Parameters
     ----------
@@ -134,7 +134,7 @@ def extrapolate_windspeed(
 ) -> pd.Series | np.ndarray | float:
     """
     Extrapolates wind speed vertically using the Power Law. This function is based on the
-    implementation provided by OpenOA (https://github.com/NREL/OpenOA).
+    implementation provided by OpenOA (https://github.com/NatLabRockies/OpenOA).
 
     Parameters
     ----------

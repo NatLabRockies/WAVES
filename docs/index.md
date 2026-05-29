@@ -1,7 +1,7 @@
 # WAVES Offshore Wind Techno-economic Analysis
 
 Wind Asset Value Estimation System (WAVES) is a tool for estimating the lifecycle costs of
-offshore wind projects using NREL's flagship techno economic models. WAVES is in active development
+offshore wind projects using NLR's flagship techno economic models. WAVES is in active development
 due to wrapping other in-development software packages for its underlying operations: ORBIT for
 CapEx, WOMBAT for OpEx, and FLORIS for AEP.
 
@@ -13,14 +13,14 @@ the work of combining each software's configurations and results, so that users 
 put in the painstaking work, and can focus on what scenarios should be run--not how to run them.
 
 At its core, WAVES is a wrapper around [ORBIT](https://wisdem.github.io/ORBIT/),
-[WOMBAT](https://wisdem.github.io/WOMBAT/), and [FLORIS](https://nrel.github.io/floris/), so users
+[WOMBAT](https://wisdem.github.io/WOMBAT/), and [FLORIS](https://natlabrockies.github.io/floris/), so users
 are expected to know how to work with each of these models to work with WAVES.
 
 | Model | Purpose | GitHub | Documentation |
 | :---- | :------ | :----- | :------------ |
 | ORBIT | CapEx | <https://github.com/WISDEM/ORBIT/> | <https://wisdem.github.io/ORBIT/> |
 | WOMBAT | OpEx, Availability | <https://github.com/WISDEM/WOMBAT/> | <https://wisdem.github.io/WOMBAT/> |
-| FLORIS | Energy Production | <https://github.com/NREL/FLORIS/> | <https://nrel.github.io/FLORIS/> |
+| FLORIS | Energy Production | <https://github.com/NatLabRockies/FLORIS/> | <https://natlabrockies.github.io/FLORIS/> |
 
 ### Installation
 
@@ -35,7 +35,7 @@ For basic usage, users can install WAVES directly from PyPI, or from source for 
 #### From Source
 
 ```bash
-git clone https://github.com/NREL/WAVES.git
+git clone https://github.com/NatLabRockies/WAVES.git
 cd WAVES
 pip install .
 ```
@@ -61,8 +61,8 @@ pre-commit install
 
 WAVES utilizes the following for coordinating development efforts
 
-- [Issues](https://github.com/NREL/WAVES/issues): report bugs and submit feature requests
-- [Pull Requests](https://github.com/NREL/WAVES/pulls): submit bug fixes, feature request,
+- [Issues](https://github.com/NatLabRockies/WAVES/issues): report bugs and submit feature requests
+- [Pull Requests](https://github.com/NatLabRockies/WAVES/pulls): submit bug fixes, feature request,
   documentation improvements, and any other improvements
 
 ## Documentation Table of Contents

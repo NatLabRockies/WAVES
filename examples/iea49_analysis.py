@@ -1,4 +1,4 @@
-"""Script to generate results for the IEA Wind Task 49 O&M model comparison between NREL's WOMBAT
+"""Script to generate results for the IEA Wind Task 49 O&M model comparison between NLR's WOMBAT
 model (with WAVES supplement for additional results calculation) and TNO's UWISE model.
 
 IMPORTANT: This analysis was originally run using the changes applied to the WOMBAT v0.12.x release

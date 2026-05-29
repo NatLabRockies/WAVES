@@ -1,7 +1,7 @@
 capacity_kw: 15000
 capex_kw: 1300
 power_curve:
-  file: 2020ATB_NREL_Reference_15MW_240.csv
+  file: 2020ATB_NLR_Reference_15MW_240.csv
   bin_width: 0.5
 wind_turbine:
   name: Wind Turbine

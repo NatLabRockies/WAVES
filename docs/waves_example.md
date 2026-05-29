@@ -12,7 +12,7 @@ kernelspec:
 (example_cower)=
 # Cost of Wind Energy Review: 2025 Edition
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NREL/WAVES/main?filepath=examples)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NatLabRockies/WAVES/main?filepath=examples)
 
 Be sure to install `pip install "waves[examples]"` (or `pip install ".[examples]"`) to work with
 this example.
@@ -61,8 +61,8 @@ pd.options.display.max_rows = 100
 
 First, we need to set the library path, and then we'll load the configuration file, to show some of
 the configurations. For a complete guide and definition, please see either the
-[API documentation](https://nrel.github.io/WAVES/api.html) or the
-[How to use WAVES guide](https://nrel.github.io/WAVES/getting_started.html#configuring).
+[API documentation](https://natlabrockies.github.io/WAVES/api.html) or the
+[How to use WAVES guide](https://natlabrockies.github.io/WAVES/getting_started.html#configuring).
 
 ````{warning}
 If your FLORIS installation is <3.6, then the FLORIS configuration files in

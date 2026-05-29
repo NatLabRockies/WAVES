@@ -21,7 +21,7 @@ A source installation is great for users that want to work with the provided exa
 potentially modify the code at a later point in time.
 
 ```bash
-git clone https://github.com/NREL/WAVES.git
+git clone https://github.com/NatLabRockies/WAVES.git
 cd WAVES
 pip install .
 ```

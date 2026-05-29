@@ -6,8 +6,8 @@
 [![image](https://img.shields.io/pypi/pyversions/waves.svg)](https://pypi.python.org/pypi/waves)
 
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NREL/WAVES/main?filepath=examples)
-[![Jupyter Book](https://jupyterbook.org/badge.svg)](https://nrel.github.io/WAVES)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NatLabRockies/WAVES/main?filepath=examples)
+[![Jupyter Book](https://jupyterbook.org/badge.svg)](https://natlabrockies.github.io/WAVES)
 
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -17,9 +17,9 @@
 ## Overview
 
 Runs analyses for offshore wind projects by utilizing ORBIT (CapEx), WOMBAT (OpEx), and FLORIS (AEP)
-to estimate the lifecycle costs using NREL's flagship technoeconomic models.
+to estimate the lifecycle costs using NatLabRockies's flagship technoeconomic models.
 
-Please visit our [documentation site](https://nrel.github.io/WAVES/) for API documentation, a
+Please visit our [documentation site](https://natlabrockies.github.io/WAVES/) for API documentation, a
 reference guide, and examples.
 
 ## Requirements
@@ -61,7 +61,7 @@ A source installation is great for users that want to work with the provided exa
 potentially modify the code at a later point in time.
 
 ```bash
-git clone https://github.com/NREL/WAVES.git
+git clone https://github.com/NatLabRockies/WAVES.git
 cd WAVES
 pip install .
 ```
