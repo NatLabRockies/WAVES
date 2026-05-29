@@ -2027,9 +2027,11 @@ class Project(FromDictMixin):
         frequency: str = "project",
         offtake_price: float | None = None,
         per_capacity: str | None = None,
+        *,
+        loss: bool = False,
     ) -> pd.DataFrame | float:
-        """Calculates the revenue stream using the WOMBAT availabibility, FLORIS energy
-        production, and WAVES energy pricing.
+        """Calculates the (lost) revenue stream using the WOMBAT availabibility, FLORIS
+        energy production, and WAVES energy pricing.
 
         Parameters
         ----------
@@ -2041,6 +2043,9 @@ class Project(FromDictMixin):
             Provide the revenue normalized by the project's capacity, in the desired units.
             If None, then the unnormalized revenue is returned, otherwise it must
             be one of "kw", "mw", or "gw". Defaults to None.
+        loss : bool, optional
+            If True, the revenue loss is provided, and if False, the generated revenue is
+            calculated, by default False.
 
         Returns
         -------
@@ -2055,11 +2060,14 @@ class Project(FromDictMixin):
                     " keyword arguments."
                 )
 
-        revenue = self.energy_production(frequency=frequency) * 1000 * offtake_price  # MWh
+        if loss:
+            revenue = self.energy_losses(frequency=frequency) * 1000 * offtake_price  # MWh
+        else:
+            revenue = self.energy_production(frequency=frequency) * 1000 * offtake_price  # MWh
         if frequency != "project":
             if TYPE_CHECKING:
                 assert isinstance(revenue, pd.DataFrame)
-            revenue.columns = ["Revenue"]
+            revenue.columns = ["Loss" if loss else "Revenue"]
 
         if per_capacity is None:
             return revenue

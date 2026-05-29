@@ -1,0 +1,47 @@
+capacity_kw: 600
+capex_kw: 120
+oss:
+  name: OSS
+  maintenance:
+  - description: OSS Annual Inspection
+    time: 24
+    materials: 500
+    service_equipment: CTV
+    frequency: 1
+    frequency_basis: date-years
+    start_date: 04/01/1999
+    level: 1
+  failures:
+  - scale: 0
+    shape: 0
+    time: 0
+    materials: 0
+    service_equipment: CTV
+    operation_reduction: 0.0
+    level: 1
+    description: Na
+offshore_substation:
+  name: Offshore Substation
+  maintenance:
+  - description: N/A
+    time: 0
+    materials: 0
+    service_equipment: CTV
+    frequency: 0
+  failures:
+  - scale: 5
+    shape: 1
+    time: 12
+    materials: 2000
+    service_equipment: CTV
+    operation_reduction: 0
+    level: 1
+    description: Minor Repair
+  - scale: 100
+    shape: 1
+    time: 60
+    materials: 100000
+    service_equipment: CTV
+    operation_reduction: 0.5
+    level: 2
+    description: Major Repair
