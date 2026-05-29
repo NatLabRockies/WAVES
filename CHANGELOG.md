@@ -5,6 +5,8 @@
 - Creates the `generate_floris_layout` boolean input to enable automatically generating
   FLORIS layout inputs from the existing layout file.
 - Adds more checks for existing configurations before attempting to access simulation objects.
+- Fixes a bug where floating offshore substation design and installation results cause the
+  the code to error out when extracting substation results in ORBIT.
 
 ## v0.7 - 12 January 2026
 
